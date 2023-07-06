@@ -1,9 +1,14 @@
+import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './components/app';
-import { PROPOSALS } from './const';
+import App from './components/app/app';
+import { Settings } from './const';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
-root.render(<App proposals={PROPOSALS} />);
+root.render(
+  <React.StrictMode>
+    <App proposalsCount={Settings.ProposalsCount} />
+  </React.StrictMode>
+);

@@ -1,1 +1,1 @@
-export const PROPOSALS = 312;
+export const Settings = { ProposalsCount: 312 } as const;
