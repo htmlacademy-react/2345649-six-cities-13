@@ -4,6 +4,6 @@ type AppProps = {
   proposals: number;
 };
 
-export default function App({ proposals }: AppProps) {
+export default function App({ proposals }: AppProps): JSX.Element {
   return <MainPage proposals={proposals}></MainPage>;
 }

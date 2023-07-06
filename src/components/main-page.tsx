@@ -4,7 +4,7 @@ type MainPageProps = {
   proposals: number;
 }
 
-export default function MainPage({ proposals }: MainPageProps) {
+export default function MainPage({ proposals }: MainPageProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
