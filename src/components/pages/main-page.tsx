@@ -1,10 +1,28 @@
-import PlaceCard from '../place-card';
+import { Offer } from '../../types/offer';
+import OfferCard from '../offer-card';
 
 type MainPageProps = {
   proposalsCount: number;
+  offers: Offer[];
+};
+
+type OfferCardListProps = {
+  offers: Offer[];
+}
+function OfferCardList({offers}: OfferCardListProps) {
+  return (
+    <div className="cities__places-list places__list tabs__content">
+      {offers.map((offer) => (
+        <OfferCard offer={offer} key={offer.id} />
+      ))}
+    </div>
+  );
 }
 
-export default function MainPage({ proposalsCount }: MainPageProps): JSX.Element {
+export default function MainPage({
+  proposalsCount,
+  offers,
+}: MainPageProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -116,13 +134,7 @@ export default function MainPage({ proposalsCount }: MainPageProps): JSX.Element
                   </li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                <PlaceCard></PlaceCard>
-                <PlaceCard></PlaceCard>
-                <PlaceCard></PlaceCard>
-                <PlaceCard></PlaceCard>
-                <PlaceCard></PlaceCard>
-              </div>
+              <OfferCardList offers={offers} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map" />
