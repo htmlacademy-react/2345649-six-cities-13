@@ -1,23 +1,10 @@
 import { Offer } from '../../types/offer';
-import OfferCard from '../offer-card';
+import OfferCardList from '../offer-card-list';
 
 type MainPageProps = {
   proposalsCount: number;
   offers: Offer[];
 };
-
-type OfferCardListProps = {
-  offers: Offer[];
-}
-function OfferCardList({offers}: OfferCardListProps) {
-  return (
-    <div className="cities__places-list places__list tabs__content">
-      {offers.map((offer) => (
-        <OfferCard offer={offer} key={offer.id} />
-      ))}
-    </div>
-  );
-}
 
 export default function MainPage({
   proposalsCount,
