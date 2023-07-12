@@ -94,3 +94,5 @@ export const offers: Offer[] = [
     rating: 4.1,
   },
 ];
+
+export const favorites = offers.filter((o) => o.rating >= 4);

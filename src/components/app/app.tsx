@@ -6,6 +6,7 @@ import OfferPage from '../pages/offer-page';
 import NotFound from '../pages/not-found';
 import PrivateRoute from '../private-route';
 import { Offer } from '../../types/offer';
+import { favorites } from '../../mocks/offer';
 
 type AppProps = {
   proposalsCount: number;
@@ -26,7 +27,7 @@ export default function App({ proposalsCount, offers }: AppProps): JSX.Element {
           path="/favorites"
           element={
             <PrivateRoute>
-              <FavoritesPage />
+              <FavoritesPage offers={favorites}/>
             </PrivateRoute>
           }
         />
