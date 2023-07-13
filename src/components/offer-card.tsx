@@ -1,3 +1,4 @@
+import { AppRoutes } from '../const';
 import { Offer } from '../types/offer';
 
 type OfferCardProps = {
@@ -31,6 +32,7 @@ function Rating({rating}: RaitingProps): JSX.Element {
 
 export default function OfferCard({ offer, from, width, heigth, cardInfoClass}: OfferCardProps): JSX.Element {
   const { isPremium, previewImage, price, title, type, rating } = offer;
+  const offerLink = `${AppRoutes.Offer}${offer.id}`;
   return (
     <article className={`${from}__card place-card`}>
       {isPremium && (
@@ -39,7 +41,7 @@ export default function OfferCard({ offer, from, width, heigth, cardInfoClass}: 
         </div>
       )}
       <div className={`${from}__image-wrapper place-card__image-wrapper`}>
-        <a href="#">
+        <a href={offerLink}>
           <img
             className="place-card__image"
             src={previewImage}
@@ -64,7 +66,7 @@ export default function OfferCard({ offer, from, width, heigth, cardInfoClass}: 
         </div>
         <Rating rating={rating} />
         <h2 className="place-card__name">
-          <a href="#">{title}</a>
+          <a href={offerLink}>{title}</a>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

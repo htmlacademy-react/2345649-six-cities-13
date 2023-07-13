@@ -22,7 +22,7 @@ export default function App({ proposalsCount, offers }: AppProps): JSX.Element {
           path={AppRoutes.Main}
           element={<MainPage proposalsCount={proposalsCount} offers={offers} />}
         />
-        <Route path={AppRoutes.Offer} element={<OfferPage />}></Route>
+        <Route path={`${AppRoutes.Offer}:id`} element={<OfferPage />}></Route>
         <Route path={AppRoutes.Login} element={<LoginPage />}></Route>
         <Route
           path={AppRoutes.Favorites}

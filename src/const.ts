@@ -3,6 +3,6 @@ export const AppRoutes = {
   Main: '/',
   Login: '/login',
   Favorites: '/favorites',
-  Offer: '/offer/:id',
+  Offer: '/offer/',
   Any: '*'
 } as const;

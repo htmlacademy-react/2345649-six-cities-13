@@ -1,10 +1,40 @@
 import { Offer } from '../../types/offer';
+import HeaderNav from '../header-nav';
 import OfferCardList from '../offer-card-list';
 
 type MainPageProps = {
   proposalsCount: number;
   offers: Offer[];
 };
+
+function SortFilter() {
+  return (
+    <form className="places__sorting" action="#" method="get">
+      <span className="places__sorting-caption">Sort by</span>
+      <span className="places__sorting-type" tabIndex={0}>
+        Popular
+        <svg className="places__sorting-arrow" width={7} height={4}>
+          <use xlinkHref="#icon-arrow-select" />
+        </svg>
+      </span>
+      <ul className="places__options places__options--custom">
+        {/* places__options--opened */}
+        <li className="places__option places__option--active" tabIndex={0}>
+          Popular
+        </li>
+        <li className="places__option" tabIndex={0}>
+          Price: low to high
+        </li>
+        <li className="places__option" tabIndex={0}>
+          Price: high to low
+        </li>
+        <li className="places__option" tabIndex={0}>
+          Top rated first
+        </li>
+      </ul>
+    </form>
+  );
+}
 
 export default function MainPage({
   proposalsCount,
@@ -26,27 +56,7 @@ export default function MainPage({
                 />
               </a>
             </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a
-                    className="header__nav-link header__nav-link--profile"
-                    href="#"
-                  >
-                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                    <span className="header__user-name user__name">
-                      Oliver.conner@gmail.com
-                    </span>
-                    <span className="header__favorite-count">3</span>
-                  </a>
-                </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
+            <HeaderNav />
           </div>
         </div>
       </header>
@@ -95,32 +105,7 @@ export default function MainPage({
               <b className="places__found">
                 {proposalsCount} places to stay in Amsterdam
               </b>
-              <form className="places__sorting" action="#" method="get">
-                <span className="places__sorting-caption">Sort by</span>
-                <span className="places__sorting-type" tabIndex={0}>
-                  Popular
-                  <svg className="places__sorting-arrow" width={7} height={4}>
-                    <use xlinkHref="#icon-arrow-select" />
-                  </svg>
-                </span>
-                <ul className="places__options places__options--custom places__options--opened">
-                  <li
-                    className="places__option places__option--active"
-                    tabIndex={0}
-                  >
-                    Popular
-                  </li>
-                  <li className="places__option" tabIndex={0}>
-                    Price: low to high
-                  </li>
-                  <li className="places__option" tabIndex={0}>
-                    Price: high to low
-                  </li>
-                  <li className="places__option" tabIndex={0}>
-                    Top rated first
-                  </li>
-                </ul>
-              </form>
+              <SortFilter />
               <OfferCardList offers={offers} />
             </section>
             <div className="cities__right-section">
