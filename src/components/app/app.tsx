@@ -7,6 +7,7 @@ import NotFound from '../pages/not-found';
 import PrivateRoute from '../private-route';
 import { Offer } from '../../types/offer';
 import { favorites } from '../../mocks/offer';
+import { AppRoutes } from '../../const';
 
 type AppProps = {
   proposalsCount: number;
@@ -18,20 +19,20 @@ export default function App({ proposalsCount, offers }: AppProps): JSX.Element {
     <BrowserRouter>
       <Routes>
         <Route
-          path="/"
+          path={AppRoutes.Main}
           element={<MainPage proposalsCount={proposalsCount} offers={offers} />}
         />
-        <Route path="/offer/:id" element={<OfferPage />}></Route>
-        <Route path="/login" element={<LoginPage />}></Route>
+        <Route path={AppRoutes.Offer} element={<OfferPage />}></Route>
+        <Route path={AppRoutes.Login} element={<LoginPage />}></Route>
         <Route
-          path="/favorites"
+          path={AppRoutes.Favorites}
           element={
             <PrivateRoute>
               <FavoritesPage offers={favorites}/>
             </PrivateRoute>
           }
         />
-        <Route path="*" element={<NotFound />}></Route>
+        <Route path={AppRoutes.Any} element={<NotFound />}></Route>
       </Routes>
     </BrowserRouter>
   );
