@@ -11,6 +11,12 @@ type FavoritesPageProps = {
 export default function FavoritesPage({
   offers,
 }: FavoritesPageProps): JSX.Element {
+  const cities = offers.reduce<string[]>(
+    (acc, item) =>
+      acc.includes(item.city.name) ? acc : [...acc, item.city.name],
+    []
+  );
+
   return (
     <div className="page">
       <HeaderWithProfile />
@@ -19,31 +25,24 @@ export default function FavoritesPage({
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
-              <li className="favorites__locations-items">
-                <div className="favorites__locations locations locations--current">
-                  <div className="locations__item">
-                    <a className="locations__item-link" href="#">
-                      <span>Amsterdam</span>
-                    </a>
+              {cities.map((city) => (
+                <li className="favorites__locations-items" key={city}>
+                  <div className="favorites__locations locations locations--current">
+                    <div className="locations__item">
+                      <Link className="locations__item-link" to="#">
+                        <span>{city}</span>
+                      </Link>
+                    </div>
                   </div>
-                </div>
-                <div className="favorites__places">
-                  <FavoritesOfferCard offer={offers[0]} />
-                  <FavoritesOfferCard offer={offers[1]} />
-                </div>
-              </li>
-              <li className="favorites__locations-items">
-                <div className="favorites__locations locations locations--current">
-                  <div className="locations__item">
-                    <a className="locations__item-link" href="#">
-                      <span>Cologne</span>
-                    </a>
+                  <div className="favorites__places">
+                    {offers
+                      .filter((item) => item.city.name === city)
+                      .map((offer) => (
+                        <FavoritesOfferCard offer={offer} key={offer.id} />
+                      ))}
                   </div>
-                </div>
-                <div className="favorites__places">
-                  <FavoritesOfferCard offer={offers[2]} />
-                </div>
-              </li>
+                </li>
+              ))}
             </ul>
           </section>
         </div>

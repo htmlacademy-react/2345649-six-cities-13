@@ -1,4 +1,4 @@
-import Review from '../Review';
+import Review from '../review';
 import HeaderWithProfile from '../header';
 
 export default function OfferPage(): JSX.Element {
