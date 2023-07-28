@@ -18,7 +18,7 @@ function SortFilter() {
         </svg>
       </span>
       <ul className="places__options places__options--custom">
-        {/* places__options--opened */}
+        {/*                                                places__options--opened */}
         <li className="places__option places__option--active" tabIndex={0}>
           Popular
         </li>
