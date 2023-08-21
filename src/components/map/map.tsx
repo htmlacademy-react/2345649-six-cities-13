@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { Point, Location } from '../../types/offer';
-import leaflet from 'leaflet';
-import {Icon, Marker, layerGroup} from 'leaflet';
+import { URL_MARKER_DEFAULT } from '../../const';
+import leaflet, { Icon, Marker, layerGroup } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT} from '../../const';
 
 type MapProps = {
   city: Location;
@@ -13,21 +12,17 @@ type MapProps = {
 const defaultCustomIcon = new Icon({
   iconUrl: URL_MARKER_DEFAULT,
   iconSize: [40, 40],
-  iconAnchor: [20, 40]
+  iconAnchor: [20, 40],
 });
 
-const currentCustomIcon = new Icon({
-  iconUrl: URL_MARKER_CURRENT,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40]
-});
+// const currentCustomIcon = new Icon({
+//   iconUrl: URL_MARKER_CURRENT,
+//   iconSize: [40, 40],
+//   iconAnchor: [20, 40]
+// });
 
-function useMap(
-  mapRef: React.MutableRefObject<null>,
-  city: Location,
-  points: Point[]
-) {
-  const [map, setMap] = useState(null);
+function useMap(mapRef: React.MutableRefObject<null>, city: Location) {
+  const [map, setMap] = useState<leaflet.Map | null>(null);
   const isRenderedRef = useRef(false);
 
   useEffect(() => {
@@ -53,37 +48,40 @@ function useMap(
       setMap(instance);
       isRenderedRef.current = true;
     }
-
-    if (map) {
-      const markerLayer = layerGroup().addTo(map);
-      points.forEach((point) => {
-        const marker = new Marker({
-          lat: point.latitude,
-          lng: point.longitude
-        });
-
-        marker
-          // .setIcon(
-          //   selectedPoint !== undefined && point.title === selectedPoint.title
-          //     ? currentCustomIcon
-          //     : defaultCustomIcon
-          // )
-          .setIcon(defaultCustomIcon)
-          .addTo(markerLayer);
-      });
-
-      return () => {
-        map.removeLayer(markerLayer);
-      };
-    }
-  }, [map, city, points, mapRef]);
+  }, [city, mapRef]);
 
   return map;
 }
 
+function useMarkers(map: leaflet.Map | null, points: Point[]) {
+  if (map) {
+    const markerLayer = layerGroup().addTo(map);
+    points.forEach((point) => {
+      const marker = new Marker({
+        lat: point.latitude,
+        lng: point.longitude,
+      });
+
+      marker
+        // .setIcon(
+        //   selectedPoint !== undefined && point.title === selectedPoint.title
+        //     ? currentCustomIcon
+        //     : defaultCustomIcon
+        // )
+        .setIcon(defaultCustomIcon)
+        .addTo(markerLayer);
+    });
+
+    return () => {
+      map.removeLayer(markerLayer);
+    };
+  }
+}
+
 export function Map({ city, points }: MapProps): JSX.Element {
   const mapRef = useRef(null);
-  const map = useMap(mapRef, city, points);
+  const map = useMap(mapRef, city);
+  useMarkers(map, points);
 
   return <section className="cities__map map" ref={mapRef} />;
 }
