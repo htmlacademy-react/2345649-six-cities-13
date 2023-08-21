@@ -2,11 +2,14 @@ type City = {
   name: string;
   location: Location;
 };
-type Location = {
+
+export type Location = {
   latitude: number;
   longitude: number;
   zoom: number;
 };
+
+export type Point = Omit<Location, 'zoom'>;
 
 export type Offer = {
   id: string;
