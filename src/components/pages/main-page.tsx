@@ -1,4 +1,5 @@
 import { Offer } from '../../types/offer';
+import { Map } from '../map/map';
 import HeaderNav from '../header-nav';
 import OfferCardList from '../offer-card-list';
 
@@ -109,7 +110,7 @@ export default function MainPage({
               <OfferCardList offers={offers} />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map" />
+              <Map city={offers[0].city.location} points={offers.map((o) => o.location)} />
             </div>
           </div>
         </div>
