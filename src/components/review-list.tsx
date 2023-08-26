@@ -1,4 +1,4 @@
-import { Review } from './review';
+import { Review } from '../types/review';
 import ReviewForm from './review-form';
 
 type ReviewListProps = {
