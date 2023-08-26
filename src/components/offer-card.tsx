@@ -11,6 +11,7 @@ type OfferCardProps = {
 
 type FavoritesOfferCardProps = Pick<OfferCardProps, 'offer'>;
 type CitiesOfferCardProps = Pick<OfferCardProps, 'offer'>;
+type NearOfferCardProps = Pick<OfferCardProps, 'offer'>;
 
 
 type RaitingProps = {
@@ -80,4 +81,7 @@ export function FavoritesOfferCard({offer}: FavoritesOfferCardProps) {
 
 export function CitiesOfferCard({offer}: CitiesOfferCardProps) {
   return <OfferCard offer={offer} from='cities' width={260} heigth={200} cardInfoClass=''/>;
+}
+export function NearOfferCard({offer}: NearOfferCardProps) {
+  return <OfferCard offer={offer} from='near-places' width={260} heigth={200} cardInfoClass=''/>;
 }

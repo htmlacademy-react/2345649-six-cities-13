@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Point, Location } from '../../types/offer';
 import { URL_MARKER_DEFAULT } from '../../const';
 import leaflet, { Icon, Marker, layerGroup } from 'leaflet';
@@ -7,6 +7,7 @@ import 'leaflet/dist/leaflet.css';
 type MapProps = {
   city: Location;
   points: Point[];
+  type?: string;
 };
 
 const defaultCustomIcon = new Icon({
@@ -78,10 +79,15 @@ function useMarkers(map: leaflet.Map | null, points: Point[]) {
   }
 }
 
-export function Map({ city, points }: MapProps): JSX.Element {
+export function Map({
+  city,
+  points,
+  type = 'cities__map',
+}: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
+  const className = `${type} map`;
   useMarkers(map, points);
 
-  return <section className="cities__map map" ref={mapRef} />;
+  return <section className={className} ref={mapRef} />;
 }

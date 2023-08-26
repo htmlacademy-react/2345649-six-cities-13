@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from 'react';
 
-export default function Review(): JSX.Element {
+export default function ReviewForm(): JSX.Element {
   const [formData, setFormData] = useState({ rating: 5, review: '' });
 
   const handleReviewChange = (evt: ChangeEvent<HTMLTextAreaElement>) => {
