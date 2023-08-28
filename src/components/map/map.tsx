@@ -5,7 +5,7 @@ import leaflet, { Icon, Marker, layerGroup } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
 type MapProps = {
-  city: Location;
+  city: Location | undefined;
   points: Point[];
   type?: string;
 };
@@ -22,12 +22,12 @@ const defaultCustomIcon = new Icon({
 //   iconAnchor: [20, 40]
 // });
 
-function useMap(mapRef: React.MutableRefObject<null>, city: Location) {
+function useMap(mapRef: React.MutableRefObject<null>, city?: Location) {
   const [map, setMap] = useState<leaflet.Map | null>(null);
   const isRenderedRef = useRef(false);
 
   useEffect(() => {
-    if (mapRef.current !== null && !isRenderedRef.current) {
+    if (mapRef.current !== null && !isRenderedRef.current && city) {
       const instance = leaflet.map(mapRef.current, {
         center: {
           lat: city.latitude,
@@ -54,29 +54,37 @@ function useMap(mapRef: React.MutableRefObject<null>, city: Location) {
   return map;
 }
 
-function useMarkers(map: leaflet.Map | null, points: Point[]) {
-  if (map) {
-    const markerLayer = layerGroup().addTo(map);
-    points.forEach((point) => {
-      const marker = new Marker({
-        lat: point.latitude,
-        lng: point.longitude,
+function useMarkers(map: leaflet.Map | null, points: Point[], city?: Location) {
+  useEffect(() => {
+    if (map) {
+      const markerLayer = layerGroup().addTo(map);
+      points.forEach((point) => {
+        const marker = new Marker({
+          lat: point.latitude,
+          lng: point.longitude,
+        });
+
+        marker
+          // .setIcon(
+          //   selectedPoint !== undefined && point.title === selectedPoint.title
+          //     ? currentCustomIcon
+          //     : defaultCustomIcon
+          // )
+          .setIcon(defaultCustomIcon)
+          .addTo(markerLayer);
       });
 
-      marker
-        // .setIcon(
-        //   selectedPoint !== undefined && point.title === selectedPoint.title
-        //     ? currentCustomIcon
-        //     : defaultCustomIcon
-        // )
-        .setIcon(defaultCustomIcon)
-        .addTo(markerLayer);
-    });
+      if (city) {
+        map.flyTo([city.latitude, city.longitude], city.zoom, {
+          animate: false,
+        });
+      }
 
-    return () => {
-      map.removeLayer(markerLayer);
-    };
-  }
+      return () => {
+        map.removeLayer(markerLayer);
+      };
+    }
+  }, [map, points, city]);
 }
 
 export function Map({
@@ -87,7 +95,7 @@ export function Map({
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
   const className = `${type} map`;
-  useMarkers(map, points);
+  useMarkers(map, points, city);
 
   return <section className={className} ref={mapRef} />;
 }

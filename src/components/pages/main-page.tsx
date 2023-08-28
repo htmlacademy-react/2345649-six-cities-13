@@ -1,15 +1,15 @@
-import { Offer } from '../../types/offer';
 import { Map } from '../map/map';
 import HeaderNav from '../header-nav';
 import { OfferCardList } from '../offer-card-list';
 import { Locations } from '../locations';
 import { cities } from '../../const';
+import { useAppSelector } from '../../hooks';
 
-type MainPageProps = {
-  offers: Offer[];
-};
-
-export default function MainPage({ offers }: MainPageProps): JSX.Element {
+export default function MainPage(): JSX.Element {
+  const city = useAppSelector((state) => state.city);
+  const offers = useAppSelector((state) => state.offers);
+  const currentOffers = offers.filter((offer) => offer.city.name === city);
+  const currentCity = offers.find((o) => o.city.name === city)?.city;
 
   return (
     <div className="page page--gray page--main">
@@ -34,15 +34,15 @@ export default function MainPage({ offers }: MainPageProps): JSX.Element {
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
-          <Locations cities={cities}/>
+          <Locations cities={cities} />
         </div>
         <div className="cities">
           <div className="cities__places-container container">
-            <OfferCardList/>
+            <OfferCardList offers={currentOffers} city={city}/>
             <div className="cities__right-section">
               <Map
-                city={offers[0].city.location}
-                points={offers.map((o) => o.location)}
+                city={currentCity?.location}
+                points={currentOffers.map((o) => o.location)}
               />
             </div>
           </div>
