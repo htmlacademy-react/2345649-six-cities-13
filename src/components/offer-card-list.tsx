@@ -24,7 +24,7 @@ export function OfferCardList({offers, city}: OfferCardListProps) {
   );
 }
 
-export function NearOfferCardList({ offers }: OfferCardListProps) {
+export function NearOfferCardList({ offers }: Omit<OfferCardListProps, 'city'>) {
   return (
     <section className="near-places places">
       <h2 className="near-places__title">Other places in the neighbourhood</h2>
