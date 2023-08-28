@@ -10,6 +10,7 @@ type MainPageProps = {
 };
 
 export default function MainPage({ offers }: MainPageProps): JSX.Element {
+
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -37,7 +38,7 @@ export default function MainPage({ offers }: MainPageProps): JSX.Element {
         </div>
         <div className="cities">
           <div className="cities__places-container container">
-            <OfferCardList offers={offers} />
+            <OfferCardList/>
             <div className="cities__right-section">
               <Map
                 city={offers[0].city.location}
