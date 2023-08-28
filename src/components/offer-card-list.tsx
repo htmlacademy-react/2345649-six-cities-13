@@ -4,14 +4,15 @@ import { SortFilter } from './pages/sort-filter';
 
 type OfferCardListProps = {
   offers: Offer[];
+  city: string;
 };
 
-export function OfferCardList({ offers }: OfferCardListProps) {
+export function OfferCardList({offers, city}: OfferCardListProps) {
   return (
     <section className="cities__places places">
       <h2 className="visually-hidden">Places</h2>
       <b className="places__found">
-        {offers.length} places to stay in Amsterdam
+        {offers.length} places to stay in {city}
       </b>
       <SortFilter />
       <div className="cities__places-list places__list tabs__content">
@@ -23,7 +24,7 @@ export function OfferCardList({ offers }: OfferCardListProps) {
   );
 }
 
-export function NearOfferCardList({ offers }: OfferCardListProps) {
+export function NearOfferCardList({ offers }: Omit<OfferCardListProps, 'city'>) {
   return (
     <section className="near-places places">
       <h2 className="near-places__title">Other places in the neighbourhood</h2>
